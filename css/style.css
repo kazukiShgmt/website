@@ -1,0 +1,666 @@
+/* =========================================================
+    一般
+
+    - z-index: .menu(999), .top(-10; トップ画像スライド), nav(1), main(0)
+    - .hidden-title: SP用ロゴタイトル
+   ========================================================= */
+
+body {
+    margin: 0;
+    font-family: 'Noto Serif JP', serif;
+    font-weight: 400;
+    font-size: 100%;
+    color: #ffffff;
+}
+.hidden-title {
+    visibility: hidden;
+    line-height: 4.5rem;
+}
+
+/* =========================================================
+    header
+
+    - header(placeholder)にposition:absoluteで各要素を配置
+   ========================================================= */
+
+header {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+
+/* menu
+   ========================================================= */
+.menu {
+    display: flex;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    width: 100%;
+    height: 4.5rem;
+}
+.hamburger {
+    display: block;
+    position: relative;
+    right: 3vw;
+    top: 0;
+    width: 3.3rem;
+    height: auto;
+    cursor: pointer;
+    text-align: center;
+    opacity: 1;
+    visibility: visible;
+    z-index: 2;
+}
+.hamburger span {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    background: #fff;
+    transition: 0.3s ease-in-out;
+}
+.hamburger span:nth-child(1) {
+    top: 3.3rem;
+}
+.hamburger span:nth-child(2) {
+    top: 3.6rem;
+}
+.hamburger.active span:nth-child(1) {
+    top: 3.3rem;
+    background: #fff;
+    transform: rotate(-45deg);
+}
+.hamburger.active span:nth-child(2) {
+    top: 3.3rem;
+    background: #fff;
+    transform: rotate(45deg);
+}
+.logo {
+    display: flex;
+    z-index: 2;
+}
+.logo h2 {
+    font-size: 1.5rem;
+    font-family: 'Noto Serif', serif;
+    line-height: 4.5rem;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity .6s ease, visibility .6s ease;
+}
+.logo img {
+    position: relative;
+    top: 1.2rem;
+    left: 0.8rem;
+}
+.logo.active h2 { /* ロゴテキストをSP時にhidden */
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* hero
+   ========================================================= */
+.top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -10;
+}
+.top img {
+    width: 100%;
+    height: 100vh;
+    object-fit: cover; /* 画像を中央配置 */
+}
+header .container { /* hero text */
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    left: 0;
+    padding-top: 4.5rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 90%;
+    height: calc(100vh - 4.5rem);
+    margin: 0 auto;
+}
+.top-text {
+    font-family: 'Sacramento', cursive;
+    font-size: 8.5rem;
+    text-align: right;
+    line-height: 1.6;
+    opacity: 0.95;
+} 
+/*
+ * テキストアニメーション(reveal effect)
+ * 参照：https://arutega.jp/text-animation/
+ */
+.top-text span {
+    position: relative;
+}
+.top-text span:after { /* span毎を改行 */
+    content: "\a";
+    white-space: pre;
+}
+.reveal-text span:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 103%;
+    height: 98%;
+    background: linear-gradient(to right, #2493D1, #ffffff);
+    opacity: 0.99;
+    transform-origin: right;
+    transform: scale(1, 1);
+}
+.reveal-text span:nth-of-type(1):before {
+    animation: reveal-text 600ms cubic-bezier(0.645, 0.045, 0.355, 1) 0.6s forwards;
+}
+.reveal-text span:nth-of-type(2):before {
+    animation: reveal-text 600ms cubic-bezier(0.645, 0.045, 0.355, 1) 0.8s forwards;
+}
+.reveal-text span:nth-of-type(3):before {
+    animation: reveal-text 600ms cubic-bezier(0.645, 0.045, 0.355, 1) 1.1s forwards;
+}
+@keyframes reveal-text {
+    100% { transform: scale(0, 1); }
+}
+/*
+ * アローナビゲーション
+ * 参照：???
+ */
+header .wrapper {
+    position: absolute;
+    margin: auto;
+    bottom: 10%;
+    left: calc(50vw - 10px); /* 中央配置(応急処置) */
+}
+.scroll {
+    position: relative;
+}
+.scroll::before {
+    animation: scroll 3.5s infinite;
+    border: solid #fff;
+    border-width: 0 0 2px 2px;
+    content: "";
+    display: inline-block;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    transform: rotate(-45deg);
+    width: 20px;
+    height: 20px;
+}
+@keyframes scroll {
+    0% {
+        transform: rotate(-45deg) translate(0, 0);
+    }
+    80% {
+        transform: rotate(-45deg) translate(-30px, 30px);
+    }
+    0%, 80%, 100% {
+        opacity: 0;
+    }
+    40% {
+        opacity: 1;
+    }
+}
+/*
+ * bxSlider スタイリング
+ * 参照：https://migi.me/css/bxslider-style-simple/
+ */
+.bx-wrapper {
+    background-color: transparent;
+    margin: 0px auto;
+    border: none;
+    box-shadow: none;
+}
+.bx-wrapper img {
+    display: block;
+    margin: 0px auto;
+}
+.bx-wrapper .bx-controls-auto,
+.bx-wrapper .bx-pager {
+    bottom: 20px;
+}
+
+/* nav
+   ========================================================= */
+nav.globalMenuSp {
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    backdrop-filter: blur(10px);
+    width: 100%;
+    height: 100vh;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity .6s ease, visibility .6s ease;
+    text-shadow: 0 0 10px #fff;
+}
+nav.globalMenuSp .container {
+    padding-top: 4.5rem;
+    display: flex;
+    justify-content: flex-end;
+    width: 90%;
+    height: calc(100vh - 4.5rem);
+    margin: 0 auto;
+}
+nav.globalMenuSp ul {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    width: auto;
+    height: 80%;
+    margin: 10% 5vw 10% 0;
+}
+nav.globalMenuSp ul li {
+    list-style-type: none;
+    padding: 0;
+    width: 100%;
+    transition: .4s all;
+}
+nav.globalMenuSp li a {
+    position: relative;
+    color: #fff;
+    text-decoration: none;
+    overflow: hidden;
+    display: inline-block;
+    line-height: 1.5; 
+    text-shadow: 0 0 2px #fff; /* 10pxに指定すると背景と調和しない */
+}
+nav.globalMenuSp a:after {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #fff;
+    transform: translate(-100%, 0);
+    transition: 0.4s;
+    content: "";
+    opacity: 0;
+}
+nav.globalMenuSp a:hover:after {
+    transform: translate(0, 0);
+    opacity: 0.8;
+}
+nav.globalMenuSp a:hover {
+    opacity: 0.8;
+}
+nav.globalMenuSp.active { /* ハンバーガーメニューを開くと表示 */
+    opacity: 1;
+    visibility: visible;
+}
+
+
+/* =========================================================
+    main
+
+    - articleセクションの画像がオーバーフロー(x軸)する恐れがあるので、
+    mainに対して overflow-x: hidden; を指定
+    - また、各セクションに width: 100vw; を指定すると、スクロールバーを
+    含んだ幅を確保し、なおかつスクロールバーに隠れた要素はオーバーフローする
+    ので、スクロールバーが常に表示される環境では意図しない表示になる。
+    対策としては 100vw をすべて 100% に置換する。
+    - セクションには height を指定せず(auto)、margin で余白の調整を行う。
+   ========================================================= */
+
+main {
+    background: linear-gradient(rgba(28, 181, 224, 0.95), rgba(0, 0, 70, 0.95)),
+    url('../images/wave.jpg'), repeat-y;
+    overflow-x: hidden;
+}
+h1.title {
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 3rem;
+    font-weight: 400;
+    color: #ffffff;
+    margin: 0;
+}
+p.sub-title {
+    font-size: 1rem;
+    padding-bottom: 1rem;
+}
+p.emphasis {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: bold;
+}
+h3.emphasis {
+    font-family: 'Noto Sans', sans-serif;
+}
+main img {
+    border-radius: 30px 10px 10px 10px;
+}
+
+/* columns
+   ========================================================= */
+.columns {
+    width: 100%;
+    padding-top: 8rem;
+    margin-bottom: 15rem;
+}
+.columns h1 {
+    margin-left: 10%;
+}
+/*
+ * サブタイトルのボーダーのスタイリング
+ * border-image => {source} {slice} / {width} / {outset}
+ * 参照：https://coliss.com/articles/build-websites/operation/css/css-only-extended-border-and-background.html
+ */
+.columns p.sub-title {
+    margin-left: 10%;
+    border-image: linear-gradient(0deg,#ffffff 2px,#0000 0) fill 0 //* width *// 0 100vw 0 0;
+}
+.columns .container {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin: 4rem auto 0;
+    font-family: 'Noto Serif JP', serif;
+    font-size: 0.875rem;
+}
+.columns .container .content {
+    width: 20%;
+    min-width: 200px;
+}
+.columns .container img {
+    width: 100%;
+    height: 180px;
+}
+
+/* article
+ 
+    - z-index: h1(1), 
+   ========================================================= */
+.article {
+    width: 100%;
+    margin-bottom: 16rem;
+}
+.article h1 {
+    margin-right: 10%;
+    text-align: right;
+    z-index: 1;
+}
+.article p.sub-title {
+    margin-right: 10%;
+    text-align: right;
+    border-image: linear-gradient(0deg,#ffffff 2px,#0000 0) fill 0//0 0 0 100vw;
+}
+.article .container {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin: 4rem auto 0;
+}
+.article .left {
+    position: relative;
+    width: 50%;
+}
+.article .right {
+    width: 50%;
+    z-index: 1;
+    display: flex;
+    align-content: flex-end;
+    flex-direction: column;
+}
+.article h3 {
+    font-size: 2rem;
+    text-align: right;
+}
+.article p {
+    text-align: left;
+    line-height: 1.5;
+}
+.article img {
+    position: absolute;
+    top: 30%;
+    left: 40%;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    object-position: 45% 0;
+    filter: saturate(150%);
+    width: 65vw;
+    height: 65vw;
+    min-width: 900px;
+    min-height: 900px;
+    border-radius: 50%;
+}
+.article .button {
+    display: block;
+    margin: 3rem 0 0 auto;
+}
+.article .button a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+    padding: 1em 2em;
+    width: 8rem;
+    font-size: 1.8rem;
+    font-family: 'Noto Sans JP', sans-serif;
+    color: #fff;
+    background-color: #ab7422;
+    border-radius: 50px;
+    letter-spacing: 0.3rem;
+    text-decoration: none;
+    transition: 0.3s;
+    box-shadow: 5px 5px 0 #382508;
+}
+.article .button a::after {
+    content: '';
+    width: 20px;
+    height: 20px;
+    border-top: 3px solid #754f17;
+    border-right: 3px solid #754f17;
+    transform: rotate(45deg);
+}
+.article .button a:hover {
+    transform: translate(5px, 5px);
+    text-decoration: none;
+    background-color: #0D0D4F;
+    box-shadow: none;
+}
+.article .button a:hover:after {
+    border-top: 3px solid #28A3CA;
+    border-right: 3px solid #28A3CA;
+}
+
+/* gallery
+   ========================================================= */
+.gallery {
+    width: 100%;
+    margin-bottom: 10rem;
+}
+.gallery h1 {
+    margin-left: 10%;
+    z-index: 2;
+}
+.gallery p.sub-title {
+    margin-left: 10%;
+    border-image: linear-gradient(0deg,#ffffff 2px,#0000 0) fill 0//0 100vw 0 0;
+    z-index: 2;
+}
+.slider {
+    width: 100%;
+    margin: 4rem 0;
+}
+.slider img { /* 画像の幅は固定でスライドの数をjQueryで調整 */
+    width: 270px;
+    height: 205px;
+    object-fit: cover;
+}
+
+/* contact
+   ========================================================= */
+.contact {
+    width: 100%;
+    margin-bottom: 8rem;
+}
+.contact h1, .contact p {
+    text-align: center;
+}
+.contact form {
+    width: 50%;
+    margin: 4rem auto;
+}
+.contact div {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4rem;
+    line-height: 2.5rem;
+}
+input, textarea {
+    width: 70%;
+    border-radius: 10px;
+    transition: background-color .6s ease, border-color .6s ease;
+}
+textarea {
+    height: 13rem;
+}
+.contact .button {
+    display: block;
+    cursor: pointer;
+    margin: 0 auto;
+    width: 15rem;
+    height: 3rem;
+    border-radius: 8px;
+    border: none;
+    background-color: #AB7422;
+    color: white;
+    font-size: 1.3rem;
+    letter-spacing: 3rem;
+    padding-left: 3rem;
+    transition: 0.5s;
+}
+.contact .button:hover {
+    opacity: 0.7;
+}
+.form.active input:not(.button), .form.active textarea { /* navを開くとフォームの背景色を透過 */
+    background-color: transparent;
+    border-color: transparent;
+}
+
+
+/* =========================================================
+    footer
+   ========================================================= */
+
+footer {
+    width: 100%;
+    height: 40px;
+    text-align: center;
+    background-color: #000046;
+    line-height: 40px;
+}
+footer a {
+    text-decoration: none;
+    color: white;
+}
+
+
+/* =========================================================
+    Responsive
+    - Tablet (480px ~ 1023px)
+    - Smartphone (~479px)
+   ========================================================= */
+
+/* スマホ・タブレット共通部分
+   ========================================================= */
+@media screen and (max-width:1023px) {
+    .columns .container {
+        box-sizing: border-box;
+        width: 90%;
+        margin-left: 10%;
+        justify-content: flex-start;
+        white-space: nowrap;
+        overflow-x: auto;
+    }
+    .columns .container .content {
+        flex: 0 0 auto; /* 要素を縮小拡大せず最適に配置する */
+        white-space: normal;
+        margin-right: 4rem;
+    }
+    .columns .container img {
+        width: 100%;
+        max-width: 230px;
+        height: 180px;
+    }
+    .contact .button {
+        width: 11.5rem;
+    }
+}
+
+/* スマホ
+   ========================================================= */
+@media screen and (max-width:479px) {
+    .logo h2 { /* ロゴテキスト(laptop, tablet)を非表示 */
+        display: none;
+    }
+    .hidden-title { /* ロゴテキストを表示 */
+        visibility: visible;
+    }
+    .top-text {
+        font-size: clamp(3rem, 16vw, 5.5rem);
+    }
+    nav.globalMenuSp .container {
+        justify-content: space-between;
+    }
+    nav.globalMenuSp ul {
+        height: 50%;
+        margin: 10% 0;
+        font-size: 0.5rem;
+    }
+    h1.title {
+        font-size: 2rem;
+    }
+    .columns .container .content {
+        width: 200px;
+    }
+    .article p.sub-title {
+        z-index: 2;
+    }
+    .article .left {
+        width: 0;
+    }
+    .article .right {
+        width: 100%;
+    }
+    .article img {
+        width: 110vh;
+        height: 110vh;
+    }
+    .contact form {
+        width: 80%;
+    }
+    input, textarea {
+        width: 60%;
+    }
+}
+
+/* タブレット
+   ========================================================= */
+@media screen and (min-width:480px) and (max-width:1023px) {
+    .top-text {
+        font-size: clamp(5.5rem, 16vw, 8rem);
+    }
+    nav.globalMenuSp ul {
+        font-size: 0.75rem;
+    }
+    .columns .container .content {
+        width: max(calc(80%/3),200px);
+    }
+    .article img {
+        width: 100%;
+        height: 100vw;
+        min-width: 700px;
+        min-height: 700px;
+    }
+}
